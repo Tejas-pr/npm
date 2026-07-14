@@ -5,7 +5,7 @@ const path = require('path');
 const sourceDir = path.join(__dirname, 'skills');
 const targetDir = path.join(process.cwd(), '.agents', 'skills');
 
-console.log('🚀 Installing tejaspr-ux-skills into .agents/skills...');
+console.log('🚀 Installing tejas-ai-skills into .agents/skills...');
 
 if (!fs.existsSync(targetDir)) {
   fs.mkdirSync(targetDir, { recursive: true });

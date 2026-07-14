@@ -8,7 +8,7 @@ When added to your AI coding assistant workspace, it helps your agents write bet
 To automatically install these skills into your project's `.agents/skills` folder, simply run:
 
 ```bash
-npx tejaspr-ux-skills
+npx tejas-ai-skills
 ```
 
 This will instantly copy the skills into your local project so your AI agents can discover them!

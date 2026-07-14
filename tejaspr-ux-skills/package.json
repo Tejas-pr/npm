@@ -1,10 +1,10 @@
 {
-  "name": "tejaspr-ux-skills",
-  "version": "1.0.1",
+  "name": "tejas-ai-skills",
+  "version": "1.0.0",
   "description": "AI Agent skills for UX Psychology and UI Copy",
   "main": "index.js",
   "bin": {
-    "tejaspr-ux-skills": "./cli.js"
+    "tejas-ai-skills": "./cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
