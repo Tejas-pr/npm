@@ -1,0 +1,25 @@
+{
+  "name": "tejaspr-ux-skills",
+  "version": "1.0.1",
+  "description": "AI Agent skills for UX Psychology and UI Copy",
+  "main": "index.js",
+  "bin": {
+    "tejaspr-ux-skills": "./cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "skills",
+    "ux",
+    "ui"
+  ],
+  "author": "Tejas",
+  "license": "MIT",
+  "files": [
+    "skills",
+    "cli.js"
+  ]
+}
