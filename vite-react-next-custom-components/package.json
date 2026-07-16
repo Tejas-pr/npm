@@ -1,0 +1,15 @@
+{
+  "name": "vite-react-next-custom-components",
+  "version": "1.0.0",
+  "description": "Custom UI components built on top of shadcn/ui for Vite, React, and Next.js",
+  "main": "cli.js",
+  "bin": {
+    "custs": "./cli.js",
+    "vite-react-next-custom-components": "./cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tejas",
+  "license": "ISC"
+}
