@@ -1,15 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Search, Copy, Check } from "lucide-react";
 import { usePackages } from "../hooks/use-npm";
 import { toast } from "sonner";
 import { siteConfig } from "../config";
+import { Skeleton } from "../components/ui/skeleton";
 
 export function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const { data: packages, isLoading, error } = usePackages(siteConfig.npmUsername);
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<"All Time" | "Trending (24h)" | "Hot" | "Skills">("All Time");
+  const [visibleCount, setVisibleCount] = useState(20);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setVisibleCount(20);
+  }, [searchQuery, activeTab]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 300) {
+        setVisibleCount((prev) => prev + 20);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   let filteredPackages = (packages || []).filter((pkg) =>
     pkg.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -27,7 +44,7 @@ export function Home() {
   }
 
   const copyInstall = () => {
-    navigator.clipboard.writeText("npx skills init");
+    navigator.clipboard.writeText("npm install <package-name>");
     setCopied(true);
     toast.success("Command copied");
     setTimeout(() => setCopied(false), 2000);
@@ -52,10 +69,10 @@ export function Home() {
                   letterSpacing: "-0.05em"
                 }}
               >
-                SKILLS
+                PACKAGES
               </h1>
               <div className="text-[10px] sm:text-xs font-mono tracking-widest text-muted-foreground uppercase break-words">
-                THE OPEN AGENT SKILLS ECOSYSTEM
+                THE OPEN PACKAGE ECOSYSTEM
               </div>
             </div>
 
@@ -64,7 +81,7 @@ export function Home() {
               <div className="flex items-center justify-between p-4 bg-secondary/30 border border-border rounded-md group hover:border-foreground/20 transition-colors w-full max-w-sm">
                 <div className="flex items-center space-x-3 font-mono text-xs sm:text-sm overflow-hidden">
                   <span className="text-muted-foreground shrink-0">$</span>
-                  <span className="truncate">npx skills init</span>
+                  <span className="truncate">npm install &lt;package&gt;</span>
                 </div>
                 <button onClick={copyInstall} className="text-muted-foreground hover:text-foreground transition-colors p-1">
                   {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
@@ -76,11 +93,11 @@ export function Home() {
           {/* Right Column */}
           <div className="flex flex-col justify-between h-full lg:pt-4">
             <div className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-12 lg:mb-0">
-              Skills are reusable capabilities for AI agents. Install them with a single command to enhance your agents with access to procedural knowledge.
+              Packages are reusable components, utilities, and skills for your projects. Install them with a single command to enhance your apps and agents.
             </div>
 
             <div className="mt-8 lg:mt-auto">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-4">AVAILABLE FOR THESE AGENTS</h3>
+              <h3 className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-4">AVAILABLE FOR THESE FRAMEWORKS & AGENTS</h3>
               <div className="flex flex-wrap items-center gap-6 text-muted-foreground">
                  <div className="flex items-center justify-center opacity-60 hover:opacity-100 hover:text-foreground transition-all cursor-default">
                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" className="w-7 h-7"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -163,9 +180,17 @@ export function Home() {
               </thead>
               <tbody>
                 {isLoading ? (
-                  <tr>
-                    <td colSpan={4} className="py-8 text-center text-muted-foreground">Loading packages...</td>
-                  </tr>
+                  Array.from({ length: 10 }).map((_, i) => (
+                    <tr key={i} className="border-b border-border/50">
+                      <td className="py-4"><Skeleton className="h-4 w-4" /></td>
+                      <td className="py-4 flex items-center space-x-2">
+                        <Skeleton className="h-5 w-32" />
+                        <Skeleton className="h-4 w-48 hidden md:inline-block" />
+                      </td>
+                      <td className="py-4 hidden sm:table-cell align-middle"><Skeleton className="h-4 w-24 ml-auto" /></td>
+                      <td className="py-4"><Skeleton className="h-4 w-12 ml-auto" /></td>
+                    </tr>
+                  ))
                 ) : error ? (
                   <tr>
                     <td colSpan={4} className="py-8 text-center text-destructive">Error loading packages</td>
@@ -175,7 +200,7 @@ export function Home() {
                     <td colSpan={4} className="py-8 text-center text-muted-foreground">No packages found</td>
                   </tr>
                 ) : (
-                  filteredPackages.map((pkg, i) => (
+                  filteredPackages.slice(0, visibleCount).map((pkg, i) => (
                     <tr key={pkg.id} className="border-b border-border/50 hover:bg-secondary/10 transition-colors group">
                       <td className="py-4 text-muted-foreground">{i + 1}</td>
                       <td className="py-4">
