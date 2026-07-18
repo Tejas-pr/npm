@@ -170,7 +170,7 @@ export function PackageDetails() {
               <h3 className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-3">
                 REPOSITORY
               </h3>
-              <a href={`https://github.com/Tejas-pr/npm/tree/main/${pkg.name}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[13px] hover:text-foreground text-muted-foreground transition-colors group">
+              <a href={pkg.repository || `https://github.com/Tejas-pr/npm/tree/main/${pkg.name}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[13px] hover:text-foreground text-muted-foreground transition-colors group">
                 <FaGithub className="w-4 h-4 group-hover:text-foreground transition-colors" />
                 <span className="font-medium group-hover:underline">View on GitHub</span>
               </a>

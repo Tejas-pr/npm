@@ -62,6 +62,15 @@ export function usePackage(packageName: string) {
         .map(([version, publishedAt]) => ({ version, publishedAt }))
         .reverse();
 
+        let repoUrl = details.repository?.url?.replace("git+", "").replace(".git", "") || "";
+        if (repoUrl.includes("github.com")) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const folderName = (details.repository as any)?.directory || details.name;
+          if (!repoUrl.includes("/tree/")) {
+            repoUrl = `${repoUrl}/tree/main/${folderName}`;
+          }
+        }
+
       const pkg: NpmPackage = {
         id: details.name,
         name: details.name,
@@ -73,7 +82,7 @@ export function usePackage(packageName: string) {
         },
         license: details.license || latestData?.license || "Unknown",
         tags: details.keywords || [],
-        repository: details.repository?.url?.replace("git+", "").replace(".git", "") || "",
+        repository: repoUrl,
         downloads: downloads,
         stars: 0,
         installCommand: `npm i ${details.name}`,
@@ -84,11 +93,7 @@ export function usePackage(packageName: string) {
         versions: versionHistory,
         readme: details.readme || "No README available.",
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        subskills: (latestData as any)?.agentSkills || (latestData as any)?.subskills || (details.name === 'tejas-ai-skills' ? [
-          { name: "ux-copywriter", description: "Analyzes UI text for psychological impact and suggests better copy for conversions." },
-          { name: "color-psychology", description: "Recommends color palettes based on desired emotional responses and accessibility." },
-          { name: "layout-auditor", description: "Evaluates layout hierarchy and component placement against UX best practices." }
-        ] : []),
+        subskills: (latestData as any)?.agentSkills || (latestData as any)?.subskills,
       };
       
       return pkg;

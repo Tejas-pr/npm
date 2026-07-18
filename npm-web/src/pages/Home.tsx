@@ -69,10 +69,10 @@ export function Home() {
                   letterSpacing: "-0.05em"
                 }}
               >
-                PACKAGES
+                ARTIFACTS
               </h1>
               <div className="text-[10px] sm:text-xs font-mono tracking-widest text-muted-foreground uppercase break-words">
-                THE OPEN PACKAGE ECOSYSTEM
+                THE NAILCUTTER OPEN ARTIFACTS ECOSYSTEM
               </div>
             </div>
 

@@ -21,5 +21,15 @@
   "files": [
     "skills",
     "cli.js"
+  ],
+  "subskills": [
+    {
+      "name": "ux-psychology-principles",
+      "description": "A comprehensive guide to utilizing human psychology, cognitive biases, and UX laws to design highly effective, engaging, and ethical applications."
+    },
+    {
+      "name": "ux-writing-and-ui-copy",
+      "description": "A comprehensive guide to UX writing, microcopy, psychological triggers in UI copy, and writing helpful error messages."
+    }
   ]
 }
