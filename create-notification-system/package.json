@@ -1,0 +1,23 @@
+{
+  "name": "create-notification-system",
+  "version": "1.0.0",
+  "description": "Scaffolding tool for the notification system.",
+  "main": "bin/cli.js",
+  "type": "module",
+  "bin": {
+    "create-notification-system": "./bin/cli.js"
+  },
+  "scripts": {
+    "start": "node ./bin/cli.js"
+  },
+  "dependencies": {
+    "prompts": "^2.4.2",
+    "fs-extra": "^11.2.0",
+    "picocolors": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/prompts": "^2.4.9",
+    "@types/fs-extra": "^11.0.4"
+  }
+}
